@@ -38,22 +38,23 @@ public class SocketListener : MonoBehaviour
         {
             if(networkStream.DataAvailable)
             {
-                Debug.Log("Received data: " + reader.ReadToEnd());
+                char[] bytes = new char[256];
+                reader.Read(bytes, 0, 256);
+                Debug.Log("Received data: " + new string(bytes));
             }
         }
 	}
-
-    // Process the client connection.
+    
     void DoAcceptTcpClientCallback(IAsyncResult ar)
     {
         client = server.EndAcceptTcpClient(ar);
-        /** Setup streams to read and write */
 
+        /** Setup streams to read and write */
         networkStream = client.GetStream();
         writer = new StreamWriter(networkStream);
         reader = new StreamReader(networkStream);
 
-        Debug.Log("Client connected completed");
+        Debug.Log("Client connection completed");
     }
 
     void OnDestroy()
