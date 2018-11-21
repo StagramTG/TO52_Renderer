@@ -36,12 +36,16 @@ public class SocketListener : MonoBehaviour
     {
         if(client != null && client.Connected)
         {
-            if(networkStream.DataAvailable)
+            string data = "";
+            while(networkStream.DataAvailable)
             {
                 char[] bytes = new char[256];
                 reader.Read(bytes, 0, 256);
-                Debug.Log("Received data: " + new string(bytes));
+                data += new string(bytes);
             }
+
+            if(data != "")
+                Debug.Log("Received data: " + data);
         }
 	}
     
