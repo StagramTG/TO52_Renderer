@@ -2,6 +2,8 @@
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 using UnityEngine;
 
@@ -48,7 +50,11 @@ public class SocketListener : MonoBehaviour
             /** Process messages */
             if(data != "")
             {
+                /** Look for message type */
+                JObject obj = JObject.Parse(data);
+
                 /** Deserialize data */
+                Debug.Log("Message type: " + obj["Type"]);
             }
         }
 	}
