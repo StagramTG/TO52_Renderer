@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.IO;
@@ -58,7 +59,6 @@ public class SocketListener : MonoBehaviour
 
                 /** Get message type as integer */
                 int msgType = int.Parse(obj["Type"].ToString());
-                Debug.Log(msgType);
 
                 /** Process different cases */
                 switch(msgType)
@@ -69,9 +69,11 @@ public class SocketListener : MonoBehaviour
                         break;
 
                     case Messages.Types.INIT_DATA:
+                        ProcessInitMessage(data);
                         break;
 
                     case Messages.Types.SIM_DATA:
+                        ProcessSimMessage(data);
                         break;
 
                     case Messages.Types.END:
@@ -111,14 +113,34 @@ public class SocketListener : MonoBehaviour
     private void ProcessBeginMessage()
     {
         /** Send back begin message */
-        Byte[] bytes = System.Text.Encoding.ASCII.GetBytes(Messages.HelloMessage);
+        Byte[] bytes = System.Text.Encoding.ASCII.GetBytes("1");
         networkStream.Write(bytes, 0, bytes.Length);
     }
 
     private void ProcessEndMessage()
     {
         /** Send back begin message */
-        Byte[] bytes = System.Text.Encoding.ASCII.GetBytes(Messages.EndMessage);
+        Byte[] bytes = System.Text.Encoding.ASCII.GetBytes("1");
         networkStream.Write(bytes, 0, bytes.Length);
+    }
+
+    private void ProcessInitMessage(string pdata)
+    {
+        Debug.Log("Receive Init data");
+
+        /** Desarialize data */
+        MessageData<List<CharacterAgentData>> data = JsonConvert.DeserializeObject<MessageData<List<CharacterAgentData>>>(pdata);
+        Debug.Log("Nb agents: " + data.Data.Count);
+        Debug.Log("First agent name: " + data.Data[0].Name);
+
+        /** Send back begin message */
+        Byte[] bytes = System.Text.Encoding.ASCII.GetBytes("1");
+        networkStream.Write(bytes, 0, bytes.Length);
+    }
+
+    private void ProcessSimMessage(string pdata)
+    {
+        /** Desarialize data */
+
     }
 }
