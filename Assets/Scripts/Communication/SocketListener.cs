@@ -130,8 +130,13 @@ public class SocketListener : MonoBehaviour
 
         /** Desarialize data */
         MessageData<List<CharacterAgentData>> data = JsonConvert.DeserializeObject<MessageData<List<CharacterAgentData>>>(pdata);
-        Debug.Log("Nb agents: " + data.Data.Count);
-        Debug.Log("First agent name: " + data.Data[0].Name);
+
+        /** Give data to agents manager for init */
+        bool initSuccess = agentsManager.InitAgents(data.Data);
+        if(!initSuccess)
+        {
+
+        }
 
         /** Send back begin message */
         Byte[] bytes = System.Text.Encoding.ASCII.GetBytes("1");

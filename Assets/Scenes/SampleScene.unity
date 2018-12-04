@@ -283,6 +283,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c99067592808914b81084e9f44e8471, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  agentPrefab: {fileID: 1507200209581864, guid: dd3a7372b50ce8c4b854e10f217cd4d4,
+    type: 2}
 --- !u!4 &1861152925
 Transform:
   m_ObjectHideFlags: 0
@@ -338,3 +340,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HostAdress: 127.0.0.1
   HostPort: 6666
+  agentsManager: {fileID: 1861152924}
