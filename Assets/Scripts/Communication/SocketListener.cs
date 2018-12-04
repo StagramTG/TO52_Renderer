@@ -21,6 +21,9 @@ public class SocketListener : MonoBehaviour
     public string HostAdress = "127.0.0.1";
     public int HostPort = 5111;
 
+    /** Instance of Agents Manager */
+    public AgentsManager agentsManager;
+
 	void Start ()
     {
         IPEndPoint endPoint = new IPEndPoint(IPAddress.Parse(HostAdress), HostPort);
@@ -53,8 +56,27 @@ public class SocketListener : MonoBehaviour
                 /** Look for message type */
                 JObject obj = JObject.Parse(data);
 
-                /** Deserialize data */
-                Debug.Log("Message type: " + obj["Type"]);
+                /** Get message type as integer */
+                int msgType = int.Parse(obj["Type"].ToString());
+                Debug.Log(msgType);
+
+                /** Process different cases */
+                switch(msgType)
+                {
+                    case Messages.Types.BEGIN:
+                        Debug.Log("Communication begin");
+                        break;
+
+                    case Messages.Types.INIT_DATA:
+                        break;
+
+                    case Messages.Types.SIM_DATA:
+                        break;
+
+                    case Messages.Types.END:
+                        Debug.Log("Communication end");
+                        break;
+                }
             }
         }
 	}
