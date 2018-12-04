@@ -64,7 +64,8 @@ public class SocketListener : MonoBehaviour
                 switch(msgType)
                 {
                     case Messages.Types.BEGIN:
-                        Debug.Log("Communication begin");
+                        Debug.Log("Begin communication");
+                        ProcessBeginMessage();
                         break;
 
                     case Messages.Types.INIT_DATA:
@@ -74,7 +75,8 @@ public class SocketListener : MonoBehaviour
                         break;
 
                     case Messages.Types.END:
-                        Debug.Log("Communication end");
+                        Debug.Log("End communication");
+                        ProcessEndMessage();
                         break;
                 }
             }
@@ -98,5 +100,25 @@ public class SocketListener : MonoBehaviour
         /** Clear socket connection */
         if (client != null && client.Connected) client.Close();
         server.Stop();
+    }
+
+    /*=======================================================
+     
+        MESSAGE PROCESSING METHODS
+
+    =======================================================*/
+
+    private void ProcessBeginMessage()
+    {
+        /** Send back begin message */
+        Byte[] bytes = System.Text.Encoding.ASCII.GetBytes(Messages.HelloMessage);
+        networkStream.Write(bytes, 0, bytes.Length);
+    }
+
+    private void ProcessEndMessage()
+    {
+        /** Send back begin message */
+        Byte[] bytes = System.Text.Encoding.ASCII.GetBytes(Messages.EndMessage);
+        networkStream.Write(bytes, 0, bytes.Length);
     }
 }
