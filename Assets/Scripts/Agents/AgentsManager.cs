@@ -17,4 +17,12 @@ public class AgentsManager : MonoBehaviour
 
         return true;
     }
+
+    public void ClearCharacterAgents()
+    {
+        foreach(Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+    }
 }

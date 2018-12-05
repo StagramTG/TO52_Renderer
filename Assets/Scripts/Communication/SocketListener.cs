@@ -81,7 +81,6 @@ public class SocketListener : MonoBehaviour
                         break;
 
                     case Messages.Types.END:
-                        Debug.Log("End communication");
                         ProcessEndMessage();
                         break;
                 }
@@ -123,6 +122,12 @@ public class SocketListener : MonoBehaviour
 
     private void ProcessEndMessage()
     {
+        /** Clear scene */
+        agentsManager.ClearCharacterAgents();
+
+        /** Wait for new connexion */
+        server.BeginAcceptTcpClient(DoAcceptTcpClientCallback, server);
+
         /** Send back begin message */
         Byte[] bytes = System.Text.Encoding.ASCII.GetBytes(RESPONSE_SUCCESS);
         networkStream.Write(bytes, 0, bytes.Length);
@@ -151,7 +156,11 @@ public class SocketListener : MonoBehaviour
 
     private void ProcessSimMessage(string pdata)
     {
-        /** Desarialize data */
+        Debug.Log("Receive Sim data");
 
+        /** Desarialize data */
+        MessageData<List<CharacterAgentData>> data = JsonConvert.DeserializeObject<MessageData<List<CharacterAgentData>>>(pdata);
+
+        Debug.Log(data.Data[0].Name);
     }
 }
