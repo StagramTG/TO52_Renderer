@@ -10,6 +10,10 @@ using UnityEngine;
 
 public class SocketListener : MonoBehaviour
 {
+    /** Response constants */
+    private const string RESPONSE_SUCCESS = "1";
+    private const string RESPONSE_ERROR   = "0";
+
     TcpClient client;
     TcpListener server;
     Byte[] bytes;
@@ -113,14 +117,14 @@ public class SocketListener : MonoBehaviour
     private void ProcessBeginMessage()
     {
         /** Send back begin message */
-        Byte[] bytes = System.Text.Encoding.ASCII.GetBytes("1");
+        Byte[] bytes = System.Text.Encoding.ASCII.GetBytes(RESPONSE_SUCCESS);
         networkStream.Write(bytes, 0, bytes.Length);
     }
 
     private void ProcessEndMessage()
     {
         /** Send back begin message */
-        Byte[] bytes = System.Text.Encoding.ASCII.GetBytes("1");
+        Byte[] bytes = System.Text.Encoding.ASCII.GetBytes(RESPONSE_SUCCESS);
         networkStream.Write(bytes, 0, bytes.Length);
     }
 
@@ -135,11 +139,13 @@ public class SocketListener : MonoBehaviour
         bool initSuccess = agentsManager.InitAgents(data.Data);
         if(!initSuccess)
         {
-
+            /** Send back error message */
+            Byte[] error = System.Text.Encoding.ASCII.GetBytes(RESPONSE_ERROR);
+            networkStream.Write(error, 0, error.Length);
         }
 
         /** Send back begin message */
-        Byte[] bytes = System.Text.Encoding.ASCII.GetBytes("1");
+        Byte[] bytes = System.Text.Encoding.ASCII.GetBytes(RESPONSE_SUCCESS);
         networkStream.Write(bytes, 0, bytes.Length);
     }
 
