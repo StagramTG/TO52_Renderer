@@ -12,6 +12,7 @@ public class AgentsManager : MonoBehaviour
         foreach(CharacterAgentData agent in pagentsData)
         {
             GameObject ag = Instantiate(agentPrefab, transform);
+            ag.transform.position = new UnityEngine.Vector3(agent.Position.X, agent.Position.Y, agent.Position.Z);
             ag.name = agent.Name;
         }
 
