@@ -156,11 +156,12 @@ public class SocketListener : MonoBehaviour
 
     private void ProcessSimMessage(string pdata)
     {
-        Debug.Log("Receive Sim data");
-
         /** Desarialize data */
         MessageData<List<CharacterAgentData>> data = JsonConvert.DeserializeObject<MessageData<List<CharacterAgentData>>>(pdata);
 
-        Debug.Log(data.Data[0].Name);
+        foreach(CharacterAgentData agentData in data.Data)
+        {
+
+        }
     }
 }
