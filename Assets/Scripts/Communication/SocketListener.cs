@@ -158,11 +158,11 @@ public class SocketListener : MonoBehaviour
     {
         /** Desarialize data */
         MessageData<List<CharacterAgentData>> data = JsonConvert.DeserializeObject<MessageData<List<CharacterAgentData>>>(pdata);
+        Debug.Log("Position : " + data.Data[0].Position.X);
 
-        foreach(CharacterAgentData agentData in data.Data)
+        foreach (CharacterAgentData agentData in data.Data)
         {
             GameObject go = agentsManager.characters[agentData.Name];
-            Debug.Log(go.name);
 
             go.transform.position = new UnityEngine.Vector3(agentData.Position.X, agentData.Position.Y, agentData.Position.Z);
         }
